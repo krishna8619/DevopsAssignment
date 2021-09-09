@@ -1,0 +1,22 @@
+version: '3'
+services:
+  reactapp:
+    build: product-compare-react
+    image: react-app:1.0.0
+    hostname: react-compare-app.sh
+    container_name: react-app
+    ports:
+      - "80:80"
+    networks:
+      - proxynetwork
+    volumes_from:
+      - revproxy
+  revproxy:
+    build: nginx
+    image: "reverseproxy:1.0.0"
+    networks:
+      - proxynetwork
+    ports:
+      - "8000:80"
+networks:
+  proxynetwork:
